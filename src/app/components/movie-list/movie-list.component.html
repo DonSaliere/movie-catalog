@@ -1,0 +1,51 @@
+<div class="container">
+	<header class="header">
+		<h1 class="catalog">Каталог фильмов</h1>
+
+		<mat-form-field class="search-field" appearance="outline">
+			<mat-label>Поиск фильмов...</mat-label>
+			<input matInput [(ngModel)]="searchTerm" (input)="onSearch(searchTerm)" [disabled]="initialLoading">
+			<mat-icon matSuffix>search</mat-icon>
+		</mat-form-field>
+	</header>
+
+	<!-- Состояние загрузки -->
+	<div *ngIf="initialLoading" class="loading">
+		<mat-spinner diameter="50"></mat-spinner>
+		<p>Загрузка фильмов...</p>
+	</div>
+
+	<!-- Сообщение об ошибке -->
+	<div *ngIf="error" class="error">
+		<mat-icon>error_outline</mat-icon>
+		<p>{{ error }}</p>
+		<button mat-raised-button color="primary" (click)="retry()">
+			Попробовать снова
+		</button>
+	</div>
+
+	<!-- Список фильмов -->
+	<div *ngIf="!initialLoading && !error" class="movies-grid">
+		<mat-card *ngFor="let movie of filteredMovies; trackBy: trackByMovieId" class="movie-card"
+			(click)="openMovieDetails(movie)">
+			<div class="card-image">
+				<img mat-card-image [src]="movie.poster" [alt]="movie.title">
+			</div>
+
+			<mat-card-content>
+				<h3 class="movie-title">{{ movie.title }}</h3>
+				<p class="movie-year">{{ movie.year }}</p>
+				<p class="movie-description">{{ movie.description | slice:0:100 }}...</p>
+				<div class="genres">
+					<span class="genre-tag" *ngFor="let genre of movie.genre">{{ genre }}</span>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+
+	<!-- Нет результатов -->
+	<div *ngIf="!initialLoading && !error && filteredMovies.length === 0 && searchTerm" class="no-results">
+		<h2>Фильмы не найдены</h2>
+		<p>Попробуйте изменить поисковый запрос</p>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<div class="movie-details">
+	<div class="details-header">
+		<h2 mat-dialog-title>{{ movie.title }}</h2>
+		<button mat-icon-button mat-dialog-close class="close-button">
+			<mat-icon>close</mat-icon>
+		</button>
+	</div>
+
+	<mat-dialog-content>
+		<div class="details-content">
+			<div class="poster">
+				<img [src]="movie.poster" [alt]="movie.title">
+			</div>
+
+			<div class="info">
+				<div class="info-item">
+					<strong>Год:</strong> {{ movie.year }}
+				</div>
+
+				<div class="info-item">
+					<strong>Жанр:</strong> {{ movie.genre.join(', ') }}
+				</div>
+
+				<div class="info-item">
+					<strong>Режиссер:</strong> {{ movie.director }}
+				</div>
+
+				<div class="info-item">
+					<strong>Актеры:</strong> {{ movie.actors.join(', ') }}
+				</div>
+
+				<div class="description">
+					<h3>Описание</h3>
+					<p>{{ movie.description }}</p>
+				</div>
+			</div>
+		</div>
+	</mat-dialog-content>
+</div>
